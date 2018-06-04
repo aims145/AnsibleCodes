@@ -8,6 +8,8 @@
     max_clients: 200
   tasks:
   - name: ensure apache is removed
-    yum:
-      name: httpd
-      state: removed
+    yum: name={{ item }} state=removed
+    with_items:
+    - httpd
+    - httpd-tools
+    - mod_ssl
