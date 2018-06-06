@@ -1,0 +1,6 @@
+---
+iptables: True
+domainname: "example.com"
+apacheuser: "sampleuser"
+dirpath: "/home/{{ apacheuser }}"
+dirname: "public_html"

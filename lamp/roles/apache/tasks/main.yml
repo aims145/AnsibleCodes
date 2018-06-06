@@ -1,10 +1,7 @@
 ---
 # tasks file for apache
-# name: Installing Httpd mod_ssl 
-- name: Installing httpd httpd-tools and mod_ssl
-  yum: name={{ item }} state=latest
-  with_items:
-  - httpd
-  - httpd-tools
-  - mod_ssl
-  when: ansible_pkg_mgr == "yum"
+- name: added in 2.4, previously you used 'include'
+  import_tasks: redhat.yml
+  when: ansible_os_platform|lower == 'redhat'
+- import_tasks: debian.yml
+  when: ansible_os_platform|lower == 'debian'

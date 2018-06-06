@@ -1,0 +1,9 @@
+---
+- name: Installing httpd httpd-tools and mod_ssl
+  yum: name={{ item }} state=latest
+  with_items:
+  - httpd
+  - httpd-tools
+  - mod_ssl
+
+
