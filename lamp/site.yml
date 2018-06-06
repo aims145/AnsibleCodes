@@ -8,5 +8,12 @@
     yum:
       name: '*'
       state: latest
-  roles:
-  - apache 
+  - name: copy mod_jk rpm to server
+    copy: src=files/epel-release-6-8.noarch.rpm dest=/opt/epel-release-6-8.noarch.rpm
+    when: ansible_os_family == 'RedHat'
+
+  - name: Installing epel repository if it is centos 6.8 or Amazon Linux AMI
+    yum: name=/opt/epel-release-6-8.noarch.rpm state=present
+    when: ansible_os_family == 'RedHat'
+#  roles:
+#  - apache 
