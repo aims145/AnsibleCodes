@@ -1,0 +1,24 @@
+---
+# tasks file for pre_tasks
+- name: updating all packages
+  yum: name='*' state=latest
+  when: ansible_os_family|lower == 'redhat'
+
+- name: copy epel rpm to server
+  copy: src=files/epel-release-6-8.noarch.rpm dest=/opt/epel-release-6-8.noarch.rpm
+  when: ansible_os_family|lower == 'redhat'
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+  when: ansible_os_family|lower == 'debian'
+
+- name: upgrading all packages
+  apt:
+    name: '*'
+    state: latest
+  when: ansible_os_family|lower == 'debian'
+
+- name: Installing epel repository if it is centos 6.8 or Amazon Linux AMI
+  yum: name=/opt/epel-release-6-8.noarch.rpm state=present
+  when: ansible_os_family|lower == 'redhat'

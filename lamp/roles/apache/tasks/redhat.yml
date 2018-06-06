@@ -5,5 +5,10 @@
   - httpd
   - httpd-tools
   - mod_ssl
-
-
+  - httpd-itk
+- template:
+    src: roles/apache/templates/vhost.j2
+    dest: /etc/httpd/conf.d/{{ domainname }}.conf
+    owner: apache
+    group: apache
+    mode: 0644
