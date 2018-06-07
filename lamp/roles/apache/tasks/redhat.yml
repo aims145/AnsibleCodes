@@ -12,3 +12,11 @@
     owner: apache
     group: apache
     mode: 0644
+- template:
+    src: roles/apache/templates/index.html.j2
+    dest: "{{ dirpath }}/{{ dirname }}/index.html"
+    owner: "{{ apacheuser }}"
+    group: "{{ apacheuser }}"
+
+- name: Starting apache service
+  service: name=httpd state=restarted enabled=yes

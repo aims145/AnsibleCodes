@@ -4,6 +4,10 @@
   yum: name='*' state=latest
   when: ansible_os_family|lower == 'redhat'
 
+- name: removing existing epel
+  yum: name=epel-release state=absent
+  when: ansible_os_family|lower == 'redhat'
+
 - name: copy epel rpm to server
   copy: src=files/epel-release-6-8.noarch.rpm dest=/opt/epel-release-6-8.noarch.rpm
   when: ansible_os_family|lower == 'redhat'
@@ -22,3 +26,13 @@
 - name: Installing epel repository if it is centos 6.8 or Amazon Linux AMI
   yum: name=/opt/epel-release-6-8.noarch.rpm state=present
   when: ansible_os_family|lower == 'redhat'
+
+- name: Create apache user
+  user: name={{ apacheuser }} state=present create_home=yes shell=/bin/bash
+
+- name: create document root directory public_html
+  file: path={{ dirpath }}/{{ dirname }} state=directory owner={{ apacheuser }} group={{ apacheuser }}
+
+- name: changing permission over home dir
+  file: path={{ dirpath }} mode=777
+ 

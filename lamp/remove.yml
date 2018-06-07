@@ -3,13 +3,28 @@
   become: yes
   become_user: root
   become_method: sudo  
-  vars:
-    http_port: 80
-    max_clients: 200
   tasks:
+  - name: stop apache
+    service: name=httpd state=stopped
+
   - name: ensure apache is removed
     yum: name={{ item }} state=removed
     with_items:
     - httpd
     - httpd-tools
     - mod_ssl
+    - httpd-itk
+    when: ansible_os_family|lower == 'redhat'
+
+  - name: deleting apache user
+    user: name={{ apacheuser }} state=absent remove=yes
+
+  - name: deleting document root
+    file: path={{ dirpath }} state=absent
+
+  - name: deleting apache vhost
+    file: path=/etc/httpd/conf.d/{{ domainname }}.conf state=absent
+
+  - name: removing existing epel
+    yum: name=epel-release state=absent
+    when: ansible_os_family|lower == 'redhat'

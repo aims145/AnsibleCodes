@@ -1,6 +1,6 @@
 ---
 iptables: True
-domainname: "example.com"
-apacheuser: "sampleuser"
+domainname: "ec2-54-90-250-169.compute-1.amazonaws.com"
+apacheuser: "appuser"
 dirpath: "/home/{{ apacheuser }}"
 dirname: "public_html"
