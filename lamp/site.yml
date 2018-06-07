@@ -4,5 +4,12 @@
   become_user: root
   become_method: sudo
   roles:
+  - ec2instance
+ 
+- hosts: ec2_server_hosts
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
   - pre_tasks
-  - apache 
+  - apache

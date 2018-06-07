@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  become: yes
+  become_user: root
+  become_method: sudo
+  connection: local
+  gather_facts: False
+  tasks:
+  - name: creating aws ec2 instance
+    ec2:
+      key_name: "{{ ec2_ssh_keypair_name  }}"
+      group: test
+      instance_type: "{{ ec2_instance_type  }}"
+      image: "{{ ec2_image_id }}"
+      wait: true
+      exact_count: "{{ ec2_image_id }}"
+      count_tag:
+        Name: "{{ ec2_instance_name }}"
+      instance_tags:
+        Name: "{{ ec2_instance_name }}"
+    register: ec2
+
+  - name: Add all instance public IPs to host group
+    add_host: hostname={{ item.public_ip }} groups=ec2hosts
+    loop: "{{ ec2.instances }}"
