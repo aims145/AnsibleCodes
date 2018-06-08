@@ -1,5 +1,14 @@
 ---
-iptables: True
+iptables: True 
+
+###### Mention enterprise linux version(el6|el7) Use el6 for amazon linux
+enterprise_linux: el6
+
+##################### Apache Variables
 apacheuser: "appuser"
 dirpath: "/home/{{ apacheuser }}"
 dirname: "public_html"
+
+##################### Mysql variables
+mysql_version: 5.7
+mysql_root_password: "aims145" 

@@ -1,0 +1,6 @@
+---
+# tasks file for mysql
+
+- name: Mysql for Redhat Centos Amazon Linux
+  import_tasks: redhat.yml
+  when: ansible_os_family|lower == "redhat"
