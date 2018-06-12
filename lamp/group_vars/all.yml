@@ -10,5 +10,6 @@ dirpath: "/home/{{ apacheuser }}"
 dirname: "public_html"
 
 ##################### Mysql variables
-mysql_version: 5.7
-mysql_root_password: "aims145" 
+mysql_version: 5.5
+############# Use complext passwor to meet password policy Upper Lower Number and special case with minimun 8lenght. Like - India123@
+mysql_root_password: "Aims145145!" 

@@ -19,37 +19,29 @@
   yum: name={{ item }} state=present enablerepo=mysql55-community disablerepo=mysql80-community
   with_items:
   - mysql-server
-  - MySQL-python
+  - mysql-community-devel
   when: mysql_version == 5.5
 
 - name: Installing mysql 5.6 version
   yum: name={{ item }} state=present enablerepo=mysql56-community disablerepo=mysql80-community
   with_items:
   - mysql-server
-  - MySQL-python
-  when: mysql_version == 5.5
+  - mysql-community-devel
+  when: mysql_version == 5.6
 
 - name: Installing mysql 5.7 version
   yum: name={{ item }} state=present enablerepo=mysql57-community disablerepo=mysql80-community
   with_items:
   - mysql-server
   - mysql-community-devel
-  - python-devel
-  - MySQL-python
   when: mysql_version == 5.7
 
-- name: Start service mysqld
-  shell: "(mysqld_safe --skip-grant-tables >/dev/null 2>&1 &)"
-  register: status
-
-- name: checking status
-  debug: msg="{{ status }}"
-
-- name: MySQL | Set the root password.
-  mysql_user: name=root host=localhost password={{ mysql_root_password }}
-
-- name: stop mysql background service
-  service: name=myqsld state=stopped
-
-- name: starting mysql service normally
+- name: Start service
   service: name=mysqld state=started enabled=yes
+
+- name: Get Temp Password
+  shell: "(grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}')"
+  register: temppass
+
+- name: Set New Password for root
+  shell: "(mysqladmin -u root --password='{{ temppass.stdout }}' password {{ mysql_root_password }})"
