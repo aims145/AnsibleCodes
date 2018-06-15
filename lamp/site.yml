@@ -1,16 +1,17 @@
 ---
+#- hosts: tier1 ec2_server_hosts
+#  become: yes
+#  become_user: root
+#  become_method: sudo
+#  roles:
+#  - ec2instance
+ 
 - hosts: tier1
   become: yes
   become_user: root
   become_method: sudo
   roles:
-  - ec2instance
- 
-- hosts: ec2_server_hosts
-  become: yes
-  become_user: root
-  become_method: sudo
-  roles:
   - pre_tasks
-  - apache
-  - mysql
+#  - apache
+#  - mysql
+  - php

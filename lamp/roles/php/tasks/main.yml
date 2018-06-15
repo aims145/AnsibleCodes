@@ -1,0 +1,26 @@
+---
+# tasks file for php
+
+- name: Installing php version 5.4
+  yum: name={{ item }} state=present
+  with_items:
+  - php54
+  - php54-common
+  when: php_version == 5.4
+
+- name: Installing php version 5.6
+  yum: name={{ item }} state=present
+  with_items:
+  - php56
+  - php56-common
+  when: php_version == 5.6
+
+- name: Installing php version 5.5
+  yum: name={{ item }} state=present
+  with_items:
+  - php55
+  - php55-common
+  when: php_version == 5.5
+
+- name: Installing phpMyAdmin
+  yum: name=phpMyAdmin state=present

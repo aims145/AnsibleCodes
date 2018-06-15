@@ -12,4 +12,8 @@ dirname: "public_html"
 ##################### Mysql variables
 mysql_version: 5.5
 ############# Use complext passwor to meet password policy Upper Lower Number and special case with minimun 8lenght. Like - India123@
-mysql_root_password: "Aims145145!" 
+mysql_root_password: "Aims145145!"
+
+###################### php Variables
+############# PHP version (default 5.4|5.5|5.6|7.0|7.1|7.2)
+php_version: 5.5
